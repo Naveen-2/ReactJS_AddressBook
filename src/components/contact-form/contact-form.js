@@ -1,15 +1,78 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import "./contact-form.css"
 import cancelBtn from "../../assets/images/cancelButton.png";
+import {Link} from "react-router-dom";
+import AddressBookService from "../../service/address-book-service"
 
-function ContactForm() {
+function ContactForm(props) {
 
-    const resetForm = () => {
-        
+    let initialValue = {
+        name: '',
+        phoneNumber: '',
+        address: '',
+        city: '',
+        state: '',
+        zip: '',
+        id: Date.now(),
+        error: {
+            name: '',
+            phoneNumber: '',
+            address: '',
+            city: '',
+            zip: ''
+        } 
     }
 
-    const save = () => {
+    const [formValue, setForm] = useState(initialValue);
+
+    const setData = (obj) => {
+        setForm({
+            ...formValue,
+            ...obj,
+            id: obj.id,
+            name: obj.name,
+            phoneNumber: obj.phoneNumber,
+            address: obj.address,
+            city: obj.city,
+            state: obj.state,
+            zip:obj.zip,
+            isUpdate: true,
+            
+        });
+    }
+
+    const changeValue = (event) => {
+        setForm({...formValue, [event.target.name]: event.target.value})
+    }
+
+    useEffect(() => {
+        if(props.history.location.state)
+            setData(props.history.location.state.ContactData);
         
+    },[]);
+
+    const resetForm = () => {
+        setForm({...initialValue, id: formValue.id, isUpdate: formValue.isUpdate});
+    }
+
+    const save = async (event) => {
+        //event.preventDefault();
+        let Object = {
+            name: formValue.name,
+            phoneNumber: formValue.phoneNumber,
+            address: formValue.address,
+            city: formValue.city, 
+            state: formValue.state,
+            zip: formValue.zip,
+            id: formValue.id,
+            isUpdate: formValue.isUpdate
+        }
+        
+        const response = await AddressBookService.addContact(Object).then(() => {
+            console.log("data added successfully");
+            props.history.push('');
+        });
     }
 
     return (
@@ -17,37 +80,35 @@ function ContactForm() {
         <form action="#" className="form" onReset={() => resetForm()} onSubmit={() => save()}>
             <div className="form-head">
                 <div className="form-head-text">Person Address Form</div>
-                <a href="../pages/address_book_home.html"><img className="form-head-image" src={cancelBtn}
-                alt="CancelButton" /></a>
+                    <Link to= "/" className="add-button">
+                        <img className="form-head-image" src={cancelBtn}
+                            alt="CancelButton" />
+                    </Link>
             </div>
       
             <div className="form-constrains">
                 <div className="row-content">
                     <label htmlFor="name" className="label text">Full Name</label>
-                    <br/>
-                    <input type="text" className="input" id="name" name="name" placeholder="Your name.." autoComplete="off" required />
+                    <input type="text" className="input" id="name" name="name" placeholder="Your name.." autoComplete="off" value={formValue.name} onChange={changeValue} required />
                     <error-output className="name-error"></error-output>
                 </div>
                 <div className="row-content">
                     <label htmlFor="phoneNumber" className="label text">Phone Number</label>
-                    <br/>
                     <input type="tel" className="input" id="phoneNumber" name="phoneNumber" placeholder="Your phone number.."
-                    autoComplete="off" required/>
+                    autoComplete="off" value={formValue.phoneNumber} onChange={changeValue} required/>
                     <error-output className="tel-error"></error-output>
                 </div>
 
                 <div className="row-content">
                     <label htmlFor="address" className="label text">Address</label>
-                    <br/>
-                    <textarea name="address" id="address" placeholder="Your address" autoComplete="off" required></textarea>
+                    <textarea name="address" id="address" placeholder="Your address" autoComplete="off" value={formValue.address} onChange={changeValue} required></textarea>
                     <error-output className="address-error"></error-output>
                 </div>
                 <div className="row-content">
                     <div className="column-constrains">
                         <div className="column-content">
                             <label htmlFor="city" className="label text">City</label>
-                            <br/>
-                            <select name="city" id="city" required>
+                            <select name="city" id="city" value={formValue.city} onChange={changeValue} required>
                                 <option hidden defaultValue="Select City">Select City</option>
                                 <option value="Ahmedabad">Ahmedabad</option>
                                 <option value="Bangalore">Bangalore</option>
@@ -65,8 +126,7 @@ function ContactForm() {
 
                         <div className="column-content">
                             <label htmlFor="state" className="label text">State</label>
-                            <br/>
-                            <select name="state" id="state">
+                            <select name="state" id="state" value={formValue.state} onChange={changeValue} >
                                 <option hidden defaultValue="Select State">Select State</option>
                                 <option value="Andhra Pradesh">Andhra Pradesh</option>
                                 <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
@@ -109,8 +169,7 @@ function ContactForm() {
 
                         <div className="column-content">
                             <label htmlFor="zip" className="label text">Zip code</label>
-                            <br/>
-                            <input type="text" className="input zipcode" id="zip" name="zip" autoComplete="off" placeholder="Your zipcode.." required />
+                            <input type="text" className="input zipcode" id="zip" name="zip" autoComplete="off" placeholder="Your zipcode.." value={formValue.zip} onChange={changeValue} required />
                             <error-output className="zip-error"></error-output>
                         </div>
                     </div>

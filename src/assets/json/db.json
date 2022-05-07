@@ -1,0 +1,23 @@
+{
+  "contacts": [
+    {
+      "name": "Monika",
+      "phoneNumber": "9876543210",
+      "address": "43 asdf aerc",
+      "city": "Bangalore",
+      "state": "Chhattisgarh",
+      "zip": "654817",
+      "id": 1651899901305
+    },
+    {
+      "name": "NAVEEN KUMAR",
+      "phoneNumber": "+919585845873",
+      "address": "52, New Road street",
+      "city": "Kolkata",
+      "state": "Lakshadweep",
+      "zip": "626987",
+      "id": 1651900067164,
+      "isUpdate": true
+    }
+  ]
+}
