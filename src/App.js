@@ -1,20 +1,20 @@
-
 import './App.css';
-import ContactFrom from './components/contact-form/contact-form'
-import Header from "./components/header/header";
-import AddressDashboard from './components/address-dashboard/dashboard';
+import Home from "./components/Home/home";
+import AddressBook from './components/AddressBook/addressBook';
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import Dashboard from './components/Dashboard/dashboard';
 
 function App() {
   return (
     <>
-      <Header />
+      <Home />
       <Router>
         <div className="App">
               <Switch>
-                  <Route exact path="/" component={AddressDashboard}/>
-                  <Route exact path="/contact-form" component={ContactFrom}/>
+                  <Route exact path="/" component={Dashboard}/>
+                  <Route exact path="/form" component={AddressBook}/>
+                  <Route exact path="/form/:id" component={AddressBook}/>
               </Switch>
         </div>
       </Router>

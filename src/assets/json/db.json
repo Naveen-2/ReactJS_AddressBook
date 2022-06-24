@@ -1,15 +1,6 @@
 {
   "contacts": [
     {
-      "name": "Monika",
-      "phoneNumber": "9876543210",
-      "address": "43 asdf aerc",
-      "city": "Bangalore",
-      "state": "Chhattisgarh",
-      "zip": "654817",
-      "id": 1651899901305
-    },
-    {
       "name": "NAVEEN KUMAR",
       "phoneNumber": "+919585845873",
       "address": "52, New Road street",
@@ -18,6 +9,26 @@
       "zip": "626987",
       "id": 1651900067164,
       "isUpdate": true
+    },
+    {
+      "name": "NAVEEN KUMAR",
+      "phoneNumber": "09585848422",
+      "address": "52, New Road street",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "zip": "626123",
+      "id": 1652118814798,
+      "isUpdate": false
+    },
+    {
+      "name": "a",
+      "phoneNumber": "23",
+      "address": "asd",
+      "city": "",
+      "state": "",
+      "zip": "654",
+      "id": 1652118971200,
+      "isUpdate": false
     }
   ]
 }
